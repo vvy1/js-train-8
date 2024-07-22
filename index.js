@@ -9,6 +9,11 @@
 function getUsersFromDatabase(array) {
   // Використовуємо метод `Array.from` для створення масиву користувачів зі списку, елементи якого це об'єкти які міститять
   // id який дорівнює id користувача,firstName який дорівнює firstName користувача в верхньому регістрі та years який дорівнює age користувача
+  return Array.from(array, (user) => ({
+    id: user.id,
+    firstName: user.name.toUpperCase(),
+    years: user.age,
+  }));
   // Повертаємо масив користувачів
 }
 
@@ -38,8 +43,13 @@ console.log(getUsersFromDatabase(userRecords));
  */
 function removeLastElement(arr) {
   // Перевіряємо, чи масив не є порожнім, якщо порожній повертаємо  undefined
+  if (arr.length === 0) {
+    return undefined;
+  }
   // Використовуємо метод `pop` для видалення останнього елементу з масиву
+  arr.pop();
   // Повертаємо оновлений масив
+  return arr;
 }
 
 // Приклад використання функції removeLastElement
@@ -58,6 +68,7 @@ console.log(removeLastElement([1, 2, 3, 4, 5])); // Виведе [1, 2, 3, 4]
 function filterByCondition(arr, condition) {
   // Використовуємо метод `filter` для фільтрації масиву
   // Повертаємо відфільтрований масив
+  return arr.filter(condition);
 }
 
 // Приклад використання функції filterByCondition
@@ -75,10 +86,15 @@ console.log(filterByCondition([1, 2, 3, 4, 5], condition)); // Виведе [2, 
  */
 function checkArray(obj) {
   // Перевіряємо, чи є об'єкт не null і не undefined
-  // Використовуємо метод `Array.isArray` для перевірки, чи є об'єкт масивом
-  // Повертаємо результат перевірки
   // Якщо об'єкт є null або undefined, виводимо повідомлення про помилку Помилка: Вхідний об'єкт є null або undefined.
   //Повертаємо false
+  if (obj === null || obj === undefined) {
+    console.error("Помилка: Вхідний об'єкт є null або undefined.");
+    return false;
+  }
+  // Використовуємо метод `Array.isArray` для перевірки, чи є об'єкт масивом
+  // Повертаємо результат перевірки
+  return Array.isArray(obj);
 }
 
 // Приклад використання функції checkArray
@@ -94,10 +110,15 @@ console.log(checkArray([1, 2, 3, 4, 5])); // Виведе true
  */
 function createArray(...elements) {
   // Перевіряємо, чи кількість переданих елементів більше нуля
-  // Використовуємо метод `Array.of` для створення нового масиву з переданих елементів
-  // Повертаємо створений масив
-  // Якщо не передано жодного елементу, виводимо повідомлення про помилку
-  //Повертаємо пустий масив
+  if (elements.length > 0) {
+    // Використовуємо метод `Array.of` для створення нового масиву з переданих елементів
+    return Array.of(...elements);
+  } else {
+    // Якщо не передано жодного елементу, виводимо повідомлення про помилку
+    console.error("Помилка: Не передано жодного елементу.");
+    // Повертаємо пустий масив
+    return [];
+  }
 }
 
 // Приклад використання функції createArray
@@ -112,13 +133,22 @@ console.log(createArray(1, 2, 3, 4, 5)); // Виведе [1, 2, 3, 4, 5]
  *  index - Індекс елементу, який потрібно отримати.
  * Повертає Елемент з масиву за заданим індексом або `undefined`, якщо індекс виходить за межі масиву.
  */
+
 function getElementAtIndex(arr, index) {
   // Перевіряємо, чи масив не є порожнім
-  // Повертаємо undefined
+  if (arr.length === 0) {
+    // Повертаємо undefined, якщо масив порожній
+    return undefined;
+  }
+
   // Перевіряємо, чи індекс знаходиться в межах довжини масиву
-  // Отримуємо елемент з масиву за заданим індексом
-  // Повертаємо отриманий елемент
-  // Якщо індекс виходить за межі масиву,повертаємо undefined
+  if (index >= 0 && index < arr.length) {
+    // Отримуємо елемент з масиву за заданим індексом
+    return arr.at(index);
+  } else {
+    // Якщо індекс виходить за межі масиву, повертаємо undefined
+    return undefined;
+  }
 }
 
 // Приклад використання функції getElementAtIndex
